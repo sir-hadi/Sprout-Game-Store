@@ -20,6 +20,8 @@ class AdminModel extends CI_Model
             'developer_email' => $this->input->post('developer_email')
         );
         $this->db->insert('developer', $data);
+        // $this->db->where('id', $id);
+        // $this->db->delete('dev_request');
     }
 
 
@@ -58,4 +60,19 @@ class AdminModel extends CI_Model
     {
         return $this->db->get('transaction')->num_rows();
     }
+
+    // public function listUsers()
+    // {
+    //     $data['users'] = $this->db->get('user')->result_array();
+    // }
+
+    // public function listDevelopers()
+    // {
+    //     $data['developers'] = $this->db->get('developer')->result_array();
+    // }
+
+    // public function listTransactions()
+    // {
+    //     $data['transactions'] = $this->db->get('transaction')->result_array();
+    // }
 }

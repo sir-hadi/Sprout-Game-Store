@@ -65,15 +65,12 @@
                         </li>
                     </ul>
                 </div>
-                <div class="input-group m-2" style="width: 50%;">`
-                    <input type="text" class="form-control" placeholder="Search Games" aria-label="Search Games" aria-describedby="button-addon" />
-                    <button class=" btn btn-outline-light" type="button" id="button-addon2">
-                        Search
-                    </button>
-                </div>
+
 
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <li class="nav-item dropdown">
+                <div class="col-md-12"></div>
+                    <p style="color: white;text-align: center; margin_top: 150px;"><?= $user['name'] ?></p>
+                    <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img class='img-profile rounded-circle' width="40px" src="<?= base_url('assets/img/profile/') . $user['image']; ?>">
                         </a>

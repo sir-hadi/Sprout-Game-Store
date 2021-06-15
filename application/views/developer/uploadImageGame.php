@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-10 mx-auto">
+        <div class="col-md-10 mx-auto justify-content-center">
             <div class="img-profile">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">

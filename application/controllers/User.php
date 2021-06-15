@@ -15,10 +15,11 @@ class User extends CI_Controller
     {
         $data['title'] = 'Sprout User Page';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['games'] = $this->db->get('game')->result_array();
         if ($data['user']) {
             if ($data['user']['role_id'] == 1) {
                 $this->load->view('templates/header_user', $data);
-                $this->load->view('user/index');
+                $this->load->view('user/index', $data);
                 $this->load->view('templates/auth_footer');
             } else if ($data['user']['role_id'] == 2) {
                 redirect('developer');
@@ -42,7 +43,10 @@ class User extends CI_Controller
                 } else if ($data['user']['role_id'] == 2) {
                     $this->load->view('templates/header_developer', $data);
                 }
+                // } else if ($data['user']['role_id'] == 3) {
 
+                //     $this->load->view('templates/header_admin ', $data);
+                // }
                 $this->load->view('user/editProfile');
                 $this->load->view('templates/auth_footer');
                 $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Akun Gagal Dirubah<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -66,6 +70,7 @@ class User extends CI_Controller
 
     public function myGame()
     {
+
         $data['title'] = 'My Games';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array(); //id user
 
@@ -73,9 +78,12 @@ class User extends CI_Controller
         $this->db->from('game');
         $this->db->join('transaction', 'game.game_id = transaction.game_id');
         $condition = "transaction.id_user = " . $data['user']['id_user'];
-
+        // $this->db->where('usergame', ['id_user' => $data['user']['id_user']]);
         $this->db->where($condition);
         $data['games'] = $this->db->get()->result_array(); //data Array
+
+        // $data['myId'] = $this->db->get_where('userGame', ['id_user' => $data['user']['id_user']])->row_array(); // id game
+        // $data['games'] = $this->db->get_where(['game',['game_id' => $data['myId']['']] ]);
 
         if ($data['user']['role_id'] == 1) {
             $this->load->view('templates/header_user', $data);
@@ -133,6 +141,9 @@ class User extends CI_Controller
         $this->db->where($condition);
         $data['transactions'] = $this->db->get()->result_array(); //data Array
 
+        // $data['myId'] = $this->db->get_where('userGame', ['id_user' => $data['user']['id_user']])->row_array(); // id game
+        // $data['games'] = $this->db->get_where(['game',['game_id' => $data['myId']['']] ]);
+
         if ($data['user']['role_id'] == 1) {
             $this->load->view('templates/header_user', $data);
         } else if ($data['user']['role_id'] == 2) {
@@ -147,14 +158,16 @@ class User extends CI_Controller
         $config['upload_path']          =  './assets/img/profile'; //isi dengan nama folder temoat menyimpan gambar
         $config['allowed_types']        =  'jpg|png'; //isi dengan format/tipe gambar yang diterima
         $config['max_size']             = '2048';  //isi dengan ukuran maksimum yang bisa di upload
-        $config['max_width']            =  '1024'; //isi dengan lebar maksimum gambar yang bisa di upload
-        $config['max_height']           = '780'; //isi dengan panjang maksimum gambar yang bisa di upload
+        $config['max_width']            =  '2024'; //isi dengan lebar maksimum gambar yang bisa di upload
+        $config['max_height']           = '1780'; //isi dengan panjang maksimum gambar yang bisa di upload
 
         $this->load->library('upload', $config);
 
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        // $data['pasien'] = $this->db->get_where('medcek', ['id' => $id])->row_array();
 
         if (!$this->upload->do_upload('image')) {
+            // $data['error'] = $this->upload->display_errors('<div class="alert alert-danger alert-dismissible fade show" role="alert"><a>', '</a><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             $data['title'] = 'Ubah Foto Profile';
             if ($data['user']['role_id'] == 1) {
                 $this->load->view('templates/header_user', $data);
@@ -171,28 +184,33 @@ class User extends CI_Controller
             $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Foto Profile Berhasil Di Update<button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button> </div>');
-
+            
             if ($data['user']['role_id'] == 1) {
-                $this->load->view('templates/header_user', $data);
+                return redirect('user');
+                // $this->load->view('templates/header_user', $data);
             } else if ($data['user']['role_id'] == 2) {
-                $this->load->view('templates/header_developer', $data);
+                return redirect('developer');
+                // $this->load->view('templates/header_developer', $data);
             }
+
         }
     }
 
     public function addToCart($id)
     {
-        $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array(); #mengambil data 
         $game = $this->Model_game->find($id);
 
         $data = array(
-            'id'      => $game->game_id,
-            'qty'     => 1,
-            'price'   => $game->price,
-            'name'    => $game->gameName,
-            'description' => $game->description,
-            'id_user' => $user['id_user'],
-            "developer_id" => $game->developer_id
+            'id'      => $game->game_id, #wajib
+            'qty'     => 1, #wajib
+            'price'   => $game->price, #wajib
+            'name'    => $game->gameName, #wajib
+            'description' => $game->description, #optional
+            'id_user' => $user['id_user'], #optional
+            "developer_id" => $game->developer_id, #optional
+            "image" => $game->image #optional
+
         );
 
         $this->cart->insert($data);
@@ -216,6 +234,7 @@ class User extends CI_Controller
     {
         $data['title'] = 'My Games';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        // $data['games'] = $this->Model_game->tampil_data();
         $this->form_validation->set_rules('game_id', 'Game', 'required|trim');
 
         if ($data['user']) {

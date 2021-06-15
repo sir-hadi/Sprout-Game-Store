@@ -9,11 +9,11 @@
         <!-- ! Carousel -->
         <div class="col">
             <div id="carouselExampleControls" class="carousel slide mb-5" data-bs-ride="carousel">
-                <div class="carousel-inner">
+                <div class="carousel-inner bg-light">
 
                     <!-- ! Carousel Items -->
-                    <div class="carousel-item active">
-                        <img src="<?= base_url('assets/img/rdr2.jpg') ?>" class="d-block w-100" alt="..." />
+                    <!-- <div class="carousel-item active">
+                        <img src= class="d-block w-100" alt="..." />
                         <div class="carousel-caption">
                             <h3>Price : 778k</h3>
                             <p>
@@ -25,36 +25,36 @@
                             <button type="button" class="btn btn-primary">View</button>
                             <button type="button" class="btn btn-success">Buy</button>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="<?= base_url('assets/img/rdr2.jpg') ?>" class="d-block w-100" alt="..." />
-                        <div class="carousel-caption">
-                            <h3>Price : 778k</h3>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Perspiciatis, eaque? Blanditiis minima repudiandae
-                                praesentium at veritatis similique vero iste! Possimus
-                                beatae illum consequuntur illo laudantium harum.
-                            </p>
-                            <button type="button" class="btn btn-primary">View</button>
-                            <button type="button" class="btn btn-success">Buy</button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="<?= base_url('assets/img/rdr2.jpg') ?>" class="d-block w-100" alt="..." />
-                        <div class="carousel-caption">
-                            <h3>Price : 778k</h3>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Perspiciatis, eaque? Blanditiis minima repudiandae
-                                praesentium at veritatis similique vero iste! Possimus
-                                beatae illum consequuntur illo laudantium harum.
-                            </p>
-                            <button type="button" class="btn btn-primary">View</button>
-                            <button type="button" class="btn btn-success">Buy</button>
-                        </div>
-                    </div>
-                    <!-- ! End of Carousel Items -->
+                    </div> -->
+                    <?php for ($i = 0; $i < 2; $i++) : ?>
+                        <?php if ($i == 0) : ?>
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="<?= base_url('assets/img/game/') . $games[$i]['image'] ?>" alt="" style="max-height: 400px " />
+                                <div class="carousel-caption">
+                                    <h3>Rp. <?= number_format($games[$i]['price'], 0, ',', '.') ?></h3>
+                                    <p>
+                                        <?= $games[$i]['description'] ?>
+                                    </p>
+                                    <button type="button" class="btn btn-primary">View</button>
+                                    <button type="button" class="btn btn-success">Buy</button>
+                                </div>
+                            </div>
+                        <?php else :  ?>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="<?= base_url('assets/img/game/') . $games[$i]['image'] ?>" alt="" style="max-height: 400px " />
+                                <div class="carousel-caption ">
+                                    <h3>Rp. <?= number_format($games[$i]['price'], 0, ',', '.') ?></h3>
+                                    <p>
+                                        <?= $games[$i]['description'] ?>
+                                    </p>
+                                    <button type="button" class="btn btn-primary">View</button>
+                                    <button type="button" class="btn btn-success">Buy</button>
+                                </div>
+                            </div>
+                        <?php endif ?>
+                    <?php endfor ?>
+
+                    <!--  End of Carousel Items -->
 
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -66,145 +66,84 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-
-            <!-- ! Treanding Game List -->
-            <h4>Treanding Game List</h4>
-            <hr />
-            <div class="row">
-                <!-- start game content List -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="<?= base_url('assets/img/rdr2.jpg') ?>" alt="" /></a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">Red Dead Redemption 2</a>
-                            </h4>
-                            <h5>778k</h5>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Amet numquam aspernatur!
-                            </p>
-                            <div class="row">
-                                <button type="button" class="btn btn-primary btn-block">
-                                    View
-                                </button>
-                                <button type="button" class="btn btn-success btn-block">
-                                    Buy
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="<?= base_url('assets/img/rdr2.jpg') ?>" " alt="" /></a>
-                            <div class=" card-body">
-                            <h4 class="card-title">
-                                <a href="#">Red Dead Redemption 2</a>
-                            </h4>
-                            <h5>778k</h5>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Amet numquam aspernatur!
-                            </p>
-                            <div class="row">
-                                <button type="button" class="btn btn-primary btn-block">
-                                    View
-                                </button>
-                                <button type="button" class="btn btn-success btn-block">
-                                    Buy
-                                </button>
-                            </div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="<?= base_url('assets/img/rdr2.jpg') ?>" alt="" /></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Red Dead Redemption 2</a>
-                        </h4>
-                        <h5>778k</h5>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Amet numquam aspernatur!
-                        </p>
-                        <div class="row">
-                            <button type="button" class="btn btn-primary btn-block">
-                                View
-                            </button>
-                            <button type="button" class="btn btn-success btn-block">
-                                Buy
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="<?= base_url('assets/img/rdr1.jpg') ?>" alt="" /></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Red Dead Redemption 2</a>
-                        </h4>
-                        <h5>778k</h5>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Amet numquam aspernatur!
-                        </p>
-                        <div class="row">
-                            <button type="button" class="btn btn-primary btn-block">
-                                View
-                            </button>
-                            <button type="button" class="btn btn-success btn-block">
-                                Buy
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="<?= base_url('assets/img/rdr1.jpg') ?>" alt="" /></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Red Dead Redemption 2</a>
-                        </h4>
-                        <h5>778k</h5>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Amet numquam aspernatur!
-                        </p>
-                        <div class="row">
-                            <button type="button" class="btn btn-primary btn-block">
-                                View
-                            </button>
-                            <button type="button" class="btn btn-success btn-block">
-                                Buy
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                </div>
-            </div>
-            <!-- ! ENd of content game List -->
-
         </div>
+        <!-- ! Treanding Game List -->
+        <h4>Trending Game List</h4>
+        <hr />
+        <div class="row">
+            <?php foreach ($games as $game) : ?>
+                <?php if ($game['is_publish'] == true) : ?>
+                    <div class="col-md-4 mb-5">
+                        <div class="card h-100">
+                            <a href="#"><img height="
+                            250px" class="card-img-top" src="<?= base_url('assets/img/game/') . $game['image'] ?>" alt="" /></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="#"><?= $game['gameName'] ?></a>
+                                </h4>
+                                <h5>Rp. <?= number_format($game['price'], 0, ',', '.') ?></h5>
+                                <p class="card-text">
+                                    <?= $game['description'] ?>
+                                </p>
+                                <div class="row">
+                                    <a type="button" href="<?= base_url('user/addToCart/') . $game['game_id'] ?>" class="btn btn-primary btn-block">
+                                        Add to Cart
+                                    </a>
+                                    <!-- mengirim game_id ke function yang ada di controller User untuk nanti digunakan pada fungsi tersebut -->
+                                    <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#buygame<?= $game['game_id'] ?>">
+                                        Buy
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="buygame<?= $game['game_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><?= $game['gameName'] ?></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <img class="card-img-top img-thumbnail" src="<?= base_url('assets/img/game/') . $game['image'] ?>" alt="">
+                                <div class="modal-body">
+                                    <form action="<?= base_url('user/buyGame') ?>" method="POST">
+
+                                        <input type="text" value="<?= $game['game_id'] ?>" name="game_id" hidden>
+
+                                        <div class="form-group">
+                                            <label for="gameName">Game Name</label>
+                                            <h4><?= $game['gameName'] ?></h4>
+                                            <small class="text-muted ml-2">Game By <?= $game['developer_id'] ?></small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <h4><?= $game['description'] ?></h4>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="price">Price</label>
+                                            <h4>Rp. <?= number_format($game['price'], 0, ',', '.') ?></h4>
+                                        </div>
+
+
+                                        <button type="submit" class="btn btn-success text-center w-100">BUY</button>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif ?>
+            <?php endforeach ?>
+        </div>
+        <!-- ! ENd of content game List -->
+
+
         <!-- ! End of Treanding Game List -->
         <!-- /.row -->
 

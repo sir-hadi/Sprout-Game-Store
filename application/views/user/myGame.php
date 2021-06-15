@@ -15,9 +15,9 @@
     <div class="row">
         <!-- start game content List -->
         <?php foreach ($games as $game) : ?>
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-md-3 mb-5">
                 <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="<?= base_url('assets/img/rdr2.jpg') ?>" alt="" /></a>
+                    <a href="#"><img class="card-img-top" src="<?= base_url('assets/img/game/') . $game['image'] ?>" alt="" height="250px" /></a>
                     <div class="card-body">
                         <h4 class="card-title">
                             <a class="text-uppercase" href="#"><?= $game['gameName'] ?></a>

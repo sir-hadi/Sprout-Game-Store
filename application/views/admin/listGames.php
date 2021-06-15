@@ -54,6 +54,9 @@
                                     <p class="badge badge-success">PUBLISH</p>
                                 <?php endif ?>
                             </td>
+                            <td>
+                                <a type="button" href="<?= base_url('admin/deleteGame/' . $game["game_id"]) ?>" class="btn btn-danger">Hapus</a>
+                            </td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>

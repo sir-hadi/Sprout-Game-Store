@@ -8,15 +8,19 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->model('AdminModel');
+        // $this->load->model('UserModel');
+        // $this->load->model('Model_game');
     }
 
     public function index()
     {
         $data['title'] = 'Admin';
+        // $data['game'] = $this->Model_game->tampil_data()->result();
         $this->load->view('templates/header_admin');
         $this->load->view('templates/sidebar');
         $this->load->view('admin/index', $data);
         $this->load->view('templates/footer_admin');
+        // $this->load->view('auth/home');
     }
 
     public function devRequest()
@@ -30,8 +34,12 @@ class Admin extends CI_Controller
 
     public function allowRequest($id)
     {
-        $this->db->set('status', true)->where('id_user', $id)->update('dev_request');
-        $this->db->set('role_id', 2)->where('id_user', $id)->update('user');
+        $this->db->set('status', true);
+        $this->db->where('id_user', $id);
+        $this->db->update('dev_request');
+        $this->db->set('role_id', 2);
+        $this->db->where('id_user', $id);
+        $this->db->update('user');
         $this->AdminModel->addNewDeveloper();
         redirect('admin/devRequest');
     }
@@ -47,8 +55,9 @@ class Admin extends CI_Controller
 
     public function publishGame($id)
     {
-        # Edit by hadi 2/6/2021
-        $this->db->set('is_publish', true)->where('game_id', $id)->update('game');
+        $this->db->set('is_publish', true);
+        $this->db->where('game_id', $id);
+        $this->db->update('game');
         redirect('admin/listGameRequest');
     }
 
@@ -67,8 +76,8 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar');
         $this->load->view('admin/listGames', $data);
         $this->load->view('templates/footer_admin');
+        // $data['users'] = $this->db->get('user')->result_array();
     }
-
     public function listUsers()
     {
         $jumlah_data = $this->AdminModel->countUsers();
@@ -84,6 +93,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar');
         $this->load->view('admin/listUsers', $data);
         $this->load->view('templates/footer_admin');
+        // $data['users'] = $this->db->get('user')->result_array();
 
     }
 
@@ -102,6 +112,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar');
         $this->load->view('admin/listDevelopers', $data);
         $this->load->view('templates/footer_admin');
+        // $data['Developers'] = $this->db->get('user')->result_array();
     }
 
     public function listTransactions()
@@ -119,5 +130,15 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar');
         $this->load->view('admin/listTransactions', $data);
         $this->load->view('templates/footer_admin');
+        // $data['users'] = $this->db->get('user')->result_array();
+    }
+
+    public function deleteGame($id)
+    {
+        $this->db->where('game_id', $id);
+        $query = $this->db->get('game');
+        $row = $query->row();
+        $this->db->delete('game', array('game_id' => $id));
+        return redirect('admin/listGames');
     }
 }

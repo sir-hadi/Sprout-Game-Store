@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h1>Buy New Game</h1>
+            <h1>Buy Game from your Cart</h1>
         </div>
     </div>
     <!-- <//?= var_dump($games) ?> -->
@@ -15,7 +15,7 @@
 
             <div class="col-md-3 mb-5">
                 <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="<?= base_url('assets/img/rdr1.jpg') ?>" alt="" /></a>
+                    <a href="#"><img class="card-img-top" src="<?= base_url('assets/img/game/' . $game['image']) ?>" alt="" height="250px" /></a>
                     <div class="card-body">
                         <h4 class="card-title">
                             <a href="#"><?= $game['name'] ?></a>
@@ -46,7 +46,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <img src="https://cdn0-production-images-kly.akamaized.net/crzM7IQFUUm3eEE4-w4w9Ec2ws8=/640x360/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/853262/original/006515100_1429161283-gtavreviewheader.jpg" class="img-thumbnail">
+                        <img class="card-img-top img-thumbnail" src="<?= base_url('assets/img/game/') . $game['image'] ?>" alt="" />
                         <div class="modal-body">
                             <form action="<?= base_url('user/buyViaCart/') . $game['rowid'] ?>" method="POST">
 

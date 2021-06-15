@@ -58,15 +58,9 @@
                 </ul>
             </div>
 
-            <div class="input-group m-5 w-50">
-                <input type="text" class="form-control" placeholder="Search Games" aria-label="Search Games" aria-describedby="button-addon" />
-                <button class="btn btn-outline-light" type="button" id="button-addon2">
-                    Search
-                </button>
-            </div>
-
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <?php if ($this->session->has_userdata('email')) : ?>
+                    <div class="col-md-12"></div>
                     <p style="color: white;text-align: center;"><?= $user['name'] ?></p>
                     <li class="nav-item dropdown">
                         <a style="margin-top: -25px !important;" class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
