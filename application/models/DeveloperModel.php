@@ -2,11 +2,26 @@
 
 class DeveloperModel extends CI_Model
 {
+    /**
+     * Pada kelas ModelDeveloper ini akan mengatur logic yang akan dilakukan pada controller Developer dan semua
+     * data yang didapatkan maupun mengirim ke controller maupun view untuk Developer
+     * @author Aditya Ramadhan
+     * @version 1.0
+     * @since 2021 - 02 - 20
+     */
+
+    /** 
+     * Method tampil_data ini digunakan untuk admin mendapatkan data
+     * developer
+     */
     public function tampil_data()
     {
         return $this->db->get('developer')->result_array();
     }
-
+    /** 
+     * Method tampil_data ini digunakan untuk membuat gameRequest 
+     * yang akan dimasukkan kedalam database dengan is_publish bernilai false
+     */
     public function makeGameRequest()
     {
         $data = array(
@@ -19,7 +34,10 @@ class DeveloperModel extends CI_Model
         );
         $this->db->insert('game', $data);
     }
-
+    /** 
+     * Method myPublishedGames ini digunakan untuk mendapatkan data
+     * games yang yang sudah dipublish oleh developer yang sedang login
+     */
     public function myPublishedGames()
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
@@ -47,6 +65,10 @@ class DeveloperModel extends CI_Model
     //     return $this->db->get()->row_array(); //->num_rows(); //data Array
     // }
 
+    /** 
+     * Method getRevenue ini digunakan untuk mendapatkan data
+     * revenue berdasarkan games developer yang sudah dibeli 
+     */
     public function getRevenue()
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();

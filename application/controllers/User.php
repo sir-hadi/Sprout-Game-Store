@@ -1,9 +1,27 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+* Representasikan Controller User
+* yang bertindak sebagai flow antara semua aksi pada dari view dan model.
+* semua aksi sesuai dengann functional requirement, selain itu saat terpanggil
+* dia menyusun dan get data user mulai dari session dan profile info, serta 
+* mengambil data dari game dengan memanggil model game
+*
+* @author Abdullah Hadi
+* @version 1.2
+* @since 2021-06-15
+*/
+
 class User extends CI_Controller
 {
 
+    /**
+     * load Model user
+     * load Model game
+     * model yang di load akan di gunakan untuk mengambil data
+     * di database
+     */
     public function __construct()
     {
         parent::__construct();
@@ -11,12 +29,18 @@ class User extends CI_Controller
         $this->load->model('Model_game');
     }
 
+    /**
+     * menyusun view dan mengisi view dengan data yang di dapatkan
+     * dari model game dan session user
+     */
     public function index()
     {
         $data['title'] = 'Sprout User Page';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['games'] = $this->db->get('game')->result_array();
+        // Jika user ada akan menampilkan view dengan user yang sudah login sebelumnya
         if ($data['user']) {
+            // Berdasarkan role akan 
             if ($data['user']['role_id'] == 1) {
                 $this->load->view('templates/header_user', $data);
                 $this->load->view('user/index', $data);
@@ -24,11 +48,17 @@ class User extends CI_Controller
             } else if ($data['user']['role_id'] == 2) {
                 redirect('developer');
             }
+        // Jika user tidak ada akan mengembalikan ke paga login
         } else {
             redirect('auth');
         }
     }
 
+    /**
+     * Menampilkan view edit profile untuk user, dimana setiap role akun akan 
+     * memiliki tampilan berbeda sedikit, serta menyesuaikan data yang 
+     * di ambil dari model
+     */
     public function editProfile()
     {
         $data['title'] = 'Edit Profile Page';
@@ -43,10 +73,7 @@ class User extends CI_Controller
                 } else if ($data['user']['role_id'] == 2) {
                     $this->load->view('templates/header_developer', $data);
                 }
-                // } else if ($data['user']['role_id'] == 3) {
-
-                //     $this->load->view('templates/header_admin ', $data);
-                // }
+  
                 $this->load->view('user/editProfile');
                 $this->load->view('templates/auth_footer');
                 $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Akun Gagal Dirubah<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -68,6 +95,9 @@ class User extends CI_Controller
         }
     }
 
+    /**
+     * Menampilkan Page my game serta mengambil data dari model game yang dimiliki user terntentu
+     */
     public function myGame()
     {
 
@@ -94,6 +124,10 @@ class User extends CI_Controller
         $this->load->view('templates/auth_footer');
     }
 
+
+    /**
+     * Melakukan proses pembelian game kepada user pada game yang tersedia
+     */
     public function buyGame()
     {
         $data['title'] = 'Buy Games';
@@ -129,6 +163,9 @@ class User extends CI_Controller
         }
     }
 
+    /**
+     * Mengembalikan data transaksi user
+     */
     public function myTransactions()
     {
         $data['title'] = 'My Transactions';
@@ -141,9 +178,6 @@ class User extends CI_Controller
         $this->db->where($condition);
         $data['transactions'] = $this->db->get()->result_array(); //data Array
 
-        // $data['myId'] = $this->db->get_where('userGame', ['id_user' => $data['user']['id_user']])->row_array(); // id game
-        // $data['games'] = $this->db->get_where(['game',['game_id' => $data['myId']['']] ]);
-
         if ($data['user']['role_id'] == 1) {
             $this->load->view('templates/header_user', $data);
         } else if ($data['user']['role_id'] == 2) {
@@ -153,21 +187,22 @@ class User extends CI_Controller
         $this->load->view('templates/auth_footer');
     }
 
-    public function ubah_photo_profile() //untuk user
+    /**
+     * Melakukan pergantian profile picture user
+     */
+    public function ubah_photo_profile()
     {
-        $config['upload_path']          =  './assets/img/profile'; //isi dengan nama folder temoat menyimpan gambar
-        $config['allowed_types']        =  'jpg|png'; //isi dengan format/tipe gambar yang diterima
-        $config['max_size']             = '2048';  //isi dengan ukuran maksimum yang bisa di upload
-        $config['max_width']            =  '2024'; //isi dengan lebar maksimum gambar yang bisa di upload
-        $config['max_height']           = '1780'; //isi dengan panjang maksimum gambar yang bisa di upload
+        $config['upload_path']          =  './assets/img/profile';
+        $config['allowed_types']        =  'jpg|png'; 
+        $config['max_size']             = '2048'; 
+        $config['max_width']            =  '2024'; 
+        $config['max_height']           = '1780'; 
 
         $this->load->library('upload', $config);
 
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        // $data['pasien'] = $this->db->get_where('medcek', ['id' => $id])->row_array();
 
         if (!$this->upload->do_upload('image')) {
-            // $data['error'] = $this->upload->display_errors('<div class="alert alert-danger alert-dismissible fade show" role="alert"><a>', '</a><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             $data['title'] = 'Ubah Foto Profile';
             if ($data['user']['role_id'] == 1) {
                 $this->load->view('templates/header_user', $data);
@@ -187,15 +222,16 @@ class User extends CI_Controller
             
             if ($data['user']['role_id'] == 1) {
                 return redirect('user');
-                // $this->load->view('templates/header_user', $data);
             } else if ($data['user']['role_id'] == 2) {
                 return redirect('developer');
-                // $this->load->view('templates/header_developer', $data);
             }
 
         }
     }
 
+    /**
+     * Proses menambahkan game ke dalam cart user berdasarkan game id yang terpilih
+     */
     public function addToCart($id)
     {
         $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array(); #mengambil data 
@@ -217,6 +253,9 @@ class User extends CI_Controller
         return redirect('user/buyGame');
     }
 
+    /**
+     * Menampilkan cart user, yang dapat berisi game yang telah di pilih user
+     */
     public function myCart()
     {
         $data['title'] = 'My Cart';
@@ -230,11 +269,13 @@ class User extends CI_Controller
         $this->load->view('templates/auth_footer');
     }
 
+    /**
+     * Membeli game via card dengan parameter sebagai rowid untuk menghilangkan game tersebut di dalam view cart
+     */
     public function buyViaCart($rowid)
     {
         $data['title'] = 'My Games';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        // $data['games'] = $this->Model_game->tampil_data();
         $this->form_validation->set_rules('game_id', 'Game', 'required|trim');
 
         if ($data['user']) {
@@ -266,12 +307,19 @@ class User extends CI_Controller
         }
     }
 
+    /**
+     * Mereset dan menghapus semua isi cart user
+     */
     public function destroyCart()
     {
         $this->cart->destroy();
         redirect('user/myCart');
     }
 
+    /**
+     * Melakukan request untuk menjadi developer, dengan memanggil 
+     * function dalam UserModel untuk di manipulasi databasenya
+     */
     public function developerRequest()
     {
         $this->UserModel->devRequest();

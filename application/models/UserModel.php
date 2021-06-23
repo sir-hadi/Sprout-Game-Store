@@ -1,7 +1,19 @@
 <?php
+/**
+ * UserModel mengatur semua function yang langsung akan mengakses
+ * kepada database, dimana akan di atur semua  data yang terkait user
+ * 
+ * @author Abdullah Hadi
+ * @version 1.2
+ * @since 2021-06-15
+ */
 
 class UserModel extends CI_Model
 {
+    /**
+     * Melakukan Update profile berdasarkan id user
+     * dapat mengupdate nama dan email user
+     */
     public function updateProfile($id)
     {
         $data = array(
@@ -12,6 +24,9 @@ class UserModel extends CI_Model
         $this->db->update('user', $data);
     }
 
+    /**
+     * mengambil id user terakhir
+     */
     public function getLastId()
     {
         $query = $this->db->query('SELECT id_ FROM akun ORDER BY id DESC LIMIT 1');
@@ -19,6 +34,10 @@ class UserModel extends CI_Model
         return $result;
     }
 
+    /**
+     * Memasukan game yang terpilih ke table transaksi
+     * yang menandakan game terbeli
+     */
     public function buyNewGame()
     {
         $dataSession = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
@@ -38,12 +57,21 @@ class UserModel extends CI_Model
         $this->db->insert('transaction', $data);
     }
 
+    /**
+     * Mengambil table transaksi dengan kondisi data yang di
+     * tampilkan ada data transaksi milik user
+     * disini terlihat pada function get_where yang paramaternya
+     * kita masukan id user
+     */
     public function getTransactions()
     {
         $dataSession = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         return $this->db->get_where('transaction', ['id_user' => $dataSession['id_user']])->result_array();
     }
 
+    /**
+     * memasukan user ke dalam table dev request
+     */
     public function devRequest()
     {
         $data = array(
